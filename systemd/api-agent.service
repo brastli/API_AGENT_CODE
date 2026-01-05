@@ -1,0 +1,14 @@
+[Unit]
+Description=FastAPI API Agent
+After=network.target
+
+[Service]
+User=ubuntu
+WorkingDirectory=/home/ubuntu/API_AGENT_CODE
+Environment="PATH=/home/ubuntu/API_AGENT_CODE/.venv/bin"
+ExecStart=/home/ubuntu/API_AGENT_CODE/.venv/bin/python -m uvicorn main:app --host 0.0.0.0 --port 8000
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
