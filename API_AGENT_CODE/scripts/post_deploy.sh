@@ -4,7 +4,7 @@ set -euo pipefail
 APP_DIR="/home/ubuntu/API_AGENT_CODE"
 cd "$APP_DIR"
 
-# 依赖安装（可选，但建议保留）
+# 安装依赖（可选；不需要就删掉这段）
 python3 -m venv .venv || true
 "$APP_DIR/.venv/bin/pip" install -U pip
 if [ -f requirements.txt ]; then
@@ -12,5 +12,4 @@ if [ -f requirements.txt ]; then
 fi
 
 sudo systemctl restart api-agent
-sudo systemctl is-active --quiet api-agent
-echo "[post_deploy] api-agent restarted"
+echo "[post_deploy] restarted api-agent"
