@@ -12,4 +12,4 @@ def health():
 
 @app.get("/version")
 def version():
-    return {"version": "b0f5b64-2026-01-09-01:12"}
+    return {"version": "b0f5b64-2026-01-09-05:12"}
