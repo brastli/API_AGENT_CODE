@@ -33,3 +33,6 @@ systemctl start "${SERVICE}"
 # 5) 健康检查：服务必须是 active
 systemctl is-active --quiet "${SERVICE}"
 echo "[post_deploy] done: $(date -Is)"
+
+date -Is | sudo tee /home/ubuntu/deploy/api_agent/DEPLOYED_AT >/dev/null
+sudo sha256sum /home/ubuntu/deploy/api_agent/API_AGENT_CODE/main.py | sudo tee /home/ubuntu/deploy/api_agent/MAIN_SHA256 >/dev/null
