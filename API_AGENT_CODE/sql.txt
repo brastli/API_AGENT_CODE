@@ -1,1 +1,5 @@
 
+ep=api-agent-mysql.cl6uumosm1qb.us-east-2.rds.amazonaws.com
+echo "EP=$ep"
+dig +short "$ep" @8.8.8.8
+dig +short "$ep" @172.31.0.2

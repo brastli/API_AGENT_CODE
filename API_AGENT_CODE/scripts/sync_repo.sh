@@ -11,7 +11,8 @@ cd "$REPO_DIR"
 if [ -d ".git" ]; then
   echo "[sync] repo exists, fetching..."
   git fetch --all --prune
-  git reset --hard "origin/${BRANCH}"
+  git pull --ff-only origin "${BRANCH}"
+
 else
   echo "[sync] no repo, cloning..."
   rm -rf "$REPO_DIR"/*

@@ -24,6 +24,7 @@ def on_startup():
         raise RuntimeError("DB ping failed")
 
     # 把 API 名字/方式/路径写入 api_registry
+    # 先查有没有！！！
     entries = []
     for r in app.routes:
         methods = getattr(r, "methods", None)

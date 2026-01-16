@@ -12,7 +12,7 @@ _CFG: Optional[dict] = None
 
 def load_config() -> dict:
     """
-    读取 ini 配置（默认：项目根目录下 config.local.ini）
+    读取 ini 配置（默认：项目根目录下 config.ini）
     也支持通过环境变量 CONFIG_INI 指定 ini 路径。
     """
     global _CFG
@@ -24,7 +24,7 @@ def load_config() -> dict:
         p = Path(ini_path).expanduser()
     else:
         # db.py 在 API_AGENT_CODE/ 目录内，上一级是项目根
-        p = Path(__file__).resolve().parent.parent / "config.local.ini"
+        p = Path(__file__).resolve().parent.parent / "config.ini"
 
     if not p.exists():
         raise RuntimeError(f"INI config not found: {p}")
