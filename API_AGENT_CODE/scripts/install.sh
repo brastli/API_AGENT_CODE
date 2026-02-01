@@ -15,11 +15,13 @@ python3 -m pip install -U pip
 if [ -f requirements.txt ]; then
   python3 -m pip install -r requirements.txt
 else
-  # 没有 requirements.txt 就至少保证 fastapi/uvicorn 有
   python3 -m pip install fastapi "uvicorn[standard]"
 fi
 
-# systemd unit（如果你希望跟随代码版本更新 unit）
+# systemd unit
 sudo cp -f systemd/api-agent.service /etc/systemd/system/api-agent.service
 sudo systemctl daemon-reload
 sudo systemctl enable api-agent.service
+
+# [新增] 必须修改权限，否则 ubuntu 用户无法运行服务
+sudo chown -R ubuntu:ubuntu /home/ubuntu/API_AGENT_CODE
