@@ -11,7 +11,7 @@ hooks:
       timeout: 60
       runas: root
 
-  # [删除] 既然 install.sh 里已经强制写入了，就不需要 BeforeInstall 备份了
+  # [删除] 既然 install.sh 里已经强制写入了，就不需要 BeforeInstall 备份了1111
   # BeforeInstall:
   #   - location: scripts/backup_config.sh
   #     timeout: 60
