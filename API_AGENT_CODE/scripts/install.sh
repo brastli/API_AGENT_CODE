@@ -3,11 +3,11 @@ set -euo pipefail
 
 cd /home/ubuntu/API_AGENT_CODE
 
-# 基础依赖（Ubuntu）
+# 1. 基础依赖
 sudo apt-get update -y
 sudo apt-get install -y python3 python3-venv python3-pip
 
-# venv & deps
+# 2. 虚拟环境
 python3 -m venv .venv
 source .venv/bin/activate
 python3 -m pip install -U pip
@@ -15,22 +15,28 @@ python3 -m pip install -U pip
 if [ -f requirements.txt ]; then
   python3 -m pip install -r requirements.txt
 else
-  # 没有 requirements.txt 就至少保证 fastapi/uvicorn 有
   python3 -m pip install fastapi "uvicorn[standard]"
 fi
 
-# systemd unit
+# 3. Systemd 服务
 sudo cp -f systemd/api-agent.service /etc/systemd/system/api-agent.service
 sudo systemctl daemon-reload
 sudo systemctl enable api-agent.service
 
-# [新增] 恢复 config.ini (从 /tmp 备份目录移回)
-# 这一步是为了防止 CodeDeploy 覆盖文件时导致配置丢失
-if [ -f /tmp/config.ini.bak ]; then
-    echo "[restore] Restoring config.ini from backup..."
-    mv /tmp/config.ini.bak /home/ubuntu/API_AGENT_CODE/config.ini
-fi
+# ---------------------------------------------------------
+# [核心修改] 不再依赖备份，直接强制写入正确的配置
+# ---------------------------------------------------------
+echo "[config] Force writing config.ini..."
 
-# [新增] 必须修改权限，否则 ubuntu 用户无法运行服务
-# 这一步必须在文件恢复之后执行，确保 config.ini 的归属权也是 ubuntu
+cat <<EOF > /home/ubuntu/API_AGENT_CODE/config.ini
+[mysql]
+host = api-agent-mysql.cl6uumosm1qb.us-east-2.rds.amazonaws.com
+port = 3306
+user = admin
+password = 12345678
+database = api_agent_db
+pool_size = 5
+EOF
+
+# 4. 权限修正 (必须在生成文件之后)
 sudo chown -R ubuntu:ubuntu /home/ubuntu/API_AGENT_CODE
