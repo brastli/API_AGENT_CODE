@@ -23,12 +23,13 @@ sudo cp -f systemd/api-agent.service /etc/systemd/system/api-agent.service
 sudo systemctl daemon-reload
 sudo systemctl enable api-agent.service
 
-# ---------------------------------------------------------
-# [核心修改] 不再依赖备份，直接强制写入正确的配置
-# ---------------------------------------------------------
-echo "[config] Force writing config.ini..."
+# ==========================================
+# 核心修正：只写入，不还原！
+# ==========================================
+echo "[config] Force generating config.ini..."
 
-cat <<EOF > /home/ubuntu/API_AGENT_CODE/config.ini
+# 无论之前文件是什么，直接覆盖写入正确内容
+cat <<EOF > config.ini
 [mysql]
 host = api-agent-mysql.cl6uumosm1qb.us-east-2.rds.amazonaws.com
 port = 3306
