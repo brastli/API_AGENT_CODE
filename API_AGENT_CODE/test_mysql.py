@@ -15,7 +15,7 @@ try:
 
     cursor = conn.cursor(dictionary=True)
 
-    # 查询 users 表 1111122222333344444
+    # 查询 users 表 1111
     cursor.execute("SELECT * FROM users")
     users = cursor.fetchall()
 
