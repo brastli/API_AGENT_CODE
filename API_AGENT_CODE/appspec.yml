@@ -11,13 +11,17 @@ hooks:
       timeout: 60
       runas: root
 
+  # [新增] 在文件复制之前，先备份现有的配置文件
+  # 注意：你需要确保 scripts/backup_config.sh 文件已存在于你的仓库中
+  BeforeInstall:
+    - location: scripts/backup_config.sh
+      timeout: 60
+      runas: root
+
   AfterInstall:
-    # [删除] 下面这 3 行必须删掉！它会导致配置被 Git 覆盖回退
-    # - location: scripts/sync_repo.sh
-    #   timeout: 300
-    #   runas: ubuntu
+    # [已删除] scripts/sync_repo.sh (防止它从 git 拉取旧配置覆盖服务器)
     
-    # 只保留 install.sh
+    # 只运行安装脚本
     - location: scripts/install.sh
       timeout: 600
       runas: root
