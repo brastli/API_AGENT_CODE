@@ -1,0 +1,4 @@
+openai
+mysql-connector-python
+python-dotenv
+requests
